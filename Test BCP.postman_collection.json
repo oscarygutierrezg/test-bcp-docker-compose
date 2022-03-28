@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "9affdcf2-cee8-49e1-b7c2-3618f5552f94",
+		"name": "Test BCP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test1@gmail.com\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/security/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"security",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/security/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"security",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"email\": \"test1@gmail.com\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/security/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"security",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all currency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"idCurrency\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/currency",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "show currency",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjQ4NDU1NDE1LCJpYXQiOjE2NDg0Mzc0MTV9.olHUmoJ_BNWNqlLvsLCo3tzKUGnWu7su2LGfjxkXNwzgLp42bIacc2nW9HAr8wqJZdWhWfsWCOcf9oG4aZdk9g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/currency/{{idCurrency}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"currency",
+						"{{idCurrency}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create change",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"exchangeRate\":\"test1\",\n    \"rate\":1.5,\n    \"currencyFrom\":\"0524d6ac-f185-4e8b-89bb-c1b3257221d2\",\n    \"currencyTo\":\"0870f77d-6163-4df7-b284-464b75635ca3\",\n    \"amount\":1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/change",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"change"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all change",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"exchangeRate\":\"test\",\n    \"rate\":0.5,\n    \"currencyFrom\":\"034e0b5a-0501-457b-aab8-06ad481f5a43\",\n    \"currencyTo\":\"03a4213e-3f9a-4ab3-9101-44ef53da2583\",\n    \"amount\":100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/change",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"change"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "show change",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"exchangeRate\":\"test\",\n    \"rate\":0.5,\n    \"currencyFrom\":\"034e0b5a-0501-457b-aab8-06ad481f5a43\",\n    \"currencyTo\":\"03a4213e-3f9a-4ab3-9101-44ef53da2583\",\n    \"amount\":100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/change/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"change",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update change",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"exchangeRate\":\"test1\",\n    \"rate\":0.7,\n    \"currencyFrom\":\"0caa88f3-449c-4a9b-bce1-6d843d48d4ae\",\n    \"currencyTo\":\"0e2d65da-0d1e-444d-b6a0-62603604a8d6\",\n    \"amount\":1000\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/bcp/v1/change/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"bcp",
+						"v1",
+						"change",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

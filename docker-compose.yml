@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mysqldb:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    hostname: mysqldb
+    container_name: mysqldb
+    environment:
+      MYSQL_DATABASE: bpc
+      MYSQL_ROOT_PASSWORD: mysql
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    networks:
+      - network-bcp
+  backend:
+    image:  "oscarygutierrezg/test-bcp-backend"
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysqldb
+    networks:
+      - network-bcp
+  frontend:
+    image: "oscarygutierrezg/test-bcp-frontend"
+    ports:
+      - "8090:80"
+    depends_on:
+      - backend
+    networks:
+      - network-bcp
+networks:
+  network-bcp:
+    driver: bridge
